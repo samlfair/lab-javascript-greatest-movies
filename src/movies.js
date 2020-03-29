@@ -6,19 +6,8 @@ movies = require ("./data")
 // Iteration 1: Ordering by year - Order by year, ascending (in growing order)
 
 function orderByYear(array){
-    let workingArray = [...array];
-    workingArray.sort(function(a,b){
-        if(a.year > b.year){
-            return 1
-        } else if(a.year < b.year){
-            return -1
-        } else if(a.title > b.title){
-            return 1
-        } else {
-            return -1
-        }
-    })
-    let newArray = [...workingArray];
+    let newArray = [...array];
+    newArray.sort((a,b) => (String(a.year) + String(a.title)).localeCompare(String(b.year) + String(b.title)))
     return newArray;
 }
 
@@ -33,24 +22,6 @@ function howManyMovies(array){
 
 // Iteration 3: Alphabetic Order - Order by title and print the first 20 titles
 
-// function orderAlphabetically(array){
-//     let workingArray = [...array];
-//     let newArray = [];
-//     workingArray.sort(function(a,b){
-//         if(a.title > b.title){
-//             return 1
-//         } else {
-//             return -1
-//         }
-//     })
-//     if(workingArray.length > 0){
-//         for(i = 0; i < workingArray.length && i < 20; i++){
-//             newArray.push(workingArray[i].title);
-//         }
-//     }
-//     return newArray;
-// }
-
 function orderAlphabetically(array){
     let newArray = array.map(movie => movie.title);
     newArray.sort((a, b) => a.localeCompare(b));
@@ -58,27 +29,6 @@ function orderAlphabetically(array){
     console.log(newArray);
     return newArray;
 }
-
-orderAlphabetically(movies);
-
-/*
-function orderAlphabetically(array) {
-    let justTitle = array.map(function(theMovie){
-        return theMovie.title;
-    }
-            // theMovie => theMovie.title
-        );
-    justTitle.sort(function(a,b){
-        return a.localeCompare(b)
-        }); 
-        if (justTitle.length<=20){
-        return justTitle;
-        }else{ 
-        justTitle.splice(20)
-        return justTitle
-        }
-    };
-*/ 
 
 // Iteration 4: All rates average - Get the average of all rates with 2 decimals
 
@@ -110,24 +60,10 @@ function dramaMoviesRate(array){
 
 // Iteration 6: Time Format - Turn duration of the movies from hours to minutes
 
-/*
-I think there is an error with Jasmine on this one. The error I'm getting is:
-TypeError: movie.duration.match is not a function
-*/
-
-/*
-it('Should return a new array, not update the original one', () => {
-    expect(turnHoursToMinutes(movies)).not.toEqual(movies);
-  });
-
-  it('The duration of the movie should be a number', () => {
-    expect(typeof turnHoursToMinutes(movies)[0].duration).toBe('number');
-  });
-*/
-
 function turnHoursToMinutes(array){
+    workingArray = JSON.parse(JSON.stringify(array));
     let newArray;
-    newArray = array.map(function(movie){
+    newArray = workingArray.map(function(movie){
         let hoursRegex  =  /([\d])h/
         let minsRegex   =  /(\d\d?)min/
         let hours       = movie.duration.match(hoursRegex);
@@ -144,9 +80,6 @@ function turnHoursToMinutes(array){
     })
     return newArray;
 }
-
-console.log(typeof(turnHoursToMinutes([])));
-
 
 
 // BONUS Iteration: Best yearly rate average - Best yearly rate average
